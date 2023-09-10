@@ -90,9 +90,9 @@ Using the search tag, LLM now will answer question based on retrieved content. S
 
 One of the biggest challenge for production usage of LLM is the chance of model hallucination, which means model generate content that is purely counter-factual. SPrompt incorporate best practices for validating if the response is hallucinated and warns users for potential hallucinated tokens. If enabled, SPrompt will response everything a normal request has with additional information such as 
 
-```json
+```python
 {
-	// ...,
+	# ...,
 
   "answer_quality": {
     "controversy_tokens": [
