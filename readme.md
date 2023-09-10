@@ -18,7 +18,7 @@ SPrompt introduces HTML like components into prompts, so that user could perform
 
 For example, to ask a questions for a PDF file, user could write a prompt like below in text.
 
-```html
+```python
 import sprompt
 
 prompt = """
@@ -34,7 +34,6 @@ prompt = """
 sprompt.OpenAIChatCompletion.create(
     model="gpt-3.5-turbo", 
     messages=[{"role": "user", "content": prompt}],
-    output_format="audio"
 )
 ```
 
@@ -44,7 +43,7 @@ SPrompt will return the response just like OpenAI seamlessly.
 
 User could also easily build a voice conversational agent with SPrompt
 
-```html
+```python
 import sprompt
 
 prompt = """
@@ -66,7 +65,9 @@ You could specify the response to be in audio format in SPrompt as well, so that
 
 LLM Applications often require searching against domain-specific data and then generate the response. Building such retrieve and generate (RAG) system is now 
 
-```html
+```python
+import sprompt
+
 prompt = """
 	Based on the following content
 	
@@ -76,6 +77,11 @@ prompt = """
 	Question: Can i get refund?
 	Answer:
 """
+
+sprompt.OpenAIChatCompletion.create(
+    model="gpt-3.5-turbo", 
+    messages=[{"role": "user", "content": prompt}],
+)
 ```
 
 Using the search tag, LLM now will answer question based on retrieved content. SPrompt will help you to fully manage the search index.
@@ -86,7 +92,7 @@ One of the biggest challenge for production usage of LLM is the chance of model 
 
 ```json
 {
-	...,
+	// ...,
 
   "answer_quality": {
     "controversy_tokens": [
