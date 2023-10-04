@@ -73,7 +73,9 @@ xprompt.OpenAIChatCompletion.create(
 )
 ```
 
-You could specify the response to be in audio format in XPrompt as well, so that instantly you have voice conversational agent built!
+To add audio file as input, user could write `<audio src='user audio file path' />` to the prompt. And to get audio back, specify the response to be in audio format in XPrompt `create` function, like `output_format="audio"`.  
+
+This way you just built a voice conversational agent!
 
 ## Search against domain-specific data
 
@@ -99,6 +101,8 @@ xprompt.OpenAIChatCompletion.create(
 ```
 
 Using the search tag, LLM now will answer question based on retrieved content. XPrompt will help you to fully manage the search index.
+
+Read more about [search](./features/search.md)
 
 ## Checking for hallucination
 
