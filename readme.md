@@ -8,7 +8,7 @@ Building LLM application requires connecting with different data sources or moda
 
 As such, XPrompt is a managed API layer simplify LLM application development though
 **Prepare data for prompt**
-- ingest different types of data**, such as pdf, audio file
+- ingest different types of data, such as pdf and audio file
 - Search against domain specific index and more directly into prompt seamlessly.
 
 **Prepare request for best use of LLM**
@@ -22,9 +22,9 @@ As such, XPrompt is a managed API layer simplify LLM application development tho
 
 And more!
 
-XPrompt is fully compatible with OpenAI request and response payload, so that same request to OpenAI can now be sent to xprompt.
+XPrompt is 100% compatible with OpenAI request and response payload, so that same request to OpenAI can now be sent to xprompt and get identical responses back.
 
-## How to use XPrompt
+## Examples for using XPrompt
 
 XPrompt introduces HTML like components into prompts, so that user could perform more complicates tasks before calling OpenAI
 
@@ -52,6 +52,7 @@ xprompt.OpenAIChatCompletion.create(
 ```
 
 XPrompt will return the response just like OpenAI seamlessly. 
+Learn more about [ingesting different data types](./features/data_ingestion.md).
 
 ### Build a voice conversational agent
 
@@ -120,3 +121,11 @@ One of the biggest challenge for production usage of LLM is the chance of model 
   }
 }
 ```
+
+## XPrompt design principal
+To make it easy to follow, XPrompt has a consistent design language which is similar to HTML to lower the learning curve and be consistent.  
+There are mainly two places users interacts with XPrompt, which are **prompt level** and **API level**.  
+In the prompt level, XPrompt allows HTML like smart components to add new content or decorate text in there.   
+In the API level, user could collect more signals like confidence score or convert output format into audio. 
+
+Learn more about our [design princial](./features/xprompt_design_principal.md)

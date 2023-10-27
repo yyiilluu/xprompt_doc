@@ -10,6 +10,7 @@ If the document is in plain text, regardless of length. User could use XPrompt t
 Example:
 ...
 
+
 ### Index from google doc
 
 ### Other data sources
@@ -40,3 +41,26 @@ xprompt.OpenAIChatCompletion.create(
     messages=[{"role": "user", "content": prompt}],
 )
 ```
+
+### Search from local index
+When long context might be required for a particular generation, it is usually better to search for the relevant part of the long context before generation rather than feeding the entire long context to the prompt. For that purpose, XPrompt allows user to add a long local context and search just on this context for generation.
+
+```python
+import xprompt
+
+prompt = """
+	Based on the following content
+	
+	content:
+	<index collection='local_index'>
+		long context to be search
+	</index>
+	<search query='request refund docs' n_results=2 collection='local_index' />
+	
+	Question: Can i get refund?
+	Answer:
+"""
+
+```
+
+This search query will only search passages from the indexed long document encapsulated by `<index></index>` with `collection='local_index'`. Without specifiying the collection, the search query will searchs against all the indexed documents.
