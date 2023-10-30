@@ -1,32 +1,33 @@
 # XPrompt
 
-### XPrompt is a feature-rich prompt enables user can write in text to connect with data sources, search against VectorDB and achieve more
+### XPrompt is a feature-rich prompt simplifies the process of building LLM application
 
 ## What does XPrompt offer
 
 Building LLM application requires connecting with different data sources or modalities, search against domain specific data using vector db, and combating with hallucination. Despite it is easy to write a prompt for OpenAI, preparing the right content for prompt and building instruments around LLM API calls remains to be challenging engineering problem.
 
-As such, XPrompt is a managed API layer simplify LLM application development though
-**Prepare data for prompt**
+As such, XPrompt is a managed API layer simplify LLM application development though  
+
+**Feature rich prompt**
 - ingest different types of data, such as pdf and audio file
 - Search against domain specific index and more directly into prompt seamlessly.
+- Compress prompt to be more cost efficient
 
-**Prepare request for best use of LLM**
-- Chunking long context in prompt into different requests and merge later
-- Data redaction on client
-- prompt compression
+**Post generation features**
+- Defence against hallucination
+- Convert output into audio
  
-**Request post processing**
-- Check hallucination
+**Production API support**
+- API rate limiting
 - Answer caching
 
 And more!
 
-XPrompt is 100% compatible with OpenAI request and response payload, so that same request to OpenAI can now be sent to xprompt and get identical responses back.
+XPrompt is 100% compatible with OpenAI request and response payload, so that same request to OpenAI can now be sent to xprompt and get identical responses back. Example notebook [here](./example_notebooks/demo.ipynb).
 
-## Examples for using XPrompt
+## [Feature rich prompt](./features/feature_rich_prompt.md)
 
-XPrompt introduces HTML like components into prompts, so that user could perform more complicates tasks before calling OpenAI
+XPrompt introduces HTML like components into prompts, so that user could perform more complicates tasks before calling OpenAI. Learn more about other [feature rich components](./features/feature_rich_prompt.md).
 
 ### Question answering with PDF
 
@@ -54,31 +55,13 @@ xprompt.OpenAIChatCompletion.create(
 XPrompt will return the response just like OpenAI seamlessly. 
 Learn more about [ingesting different data types](./features/data_ingestion.md).
 
-### Build a voice conversational agent
 
-User could also easily build a voice conversational agent with XPrompt
-
-```python
-import xprompt
-
-prompt = """
-	You are a helpful conversational agent for user.
-	
-	User: <audio src='user audio file path' />
-	Agent:
-"""
-xprompt.OpenAIChatCompletion.create(
-    model="gpt-3.5-turbo", 
-    messages=[{"role": "user", "content": prompt}],
-    output_format="audio"
-)
-```
 
 To add audio file as input, user could write `<audio src='user audio file path' />` to the prompt. And to get audio back, specify the response to be in audio format in XPrompt `create` function, like `output_format="audio"`.  
 
 This way you just built a voice conversational agent!
 
-## Search against domain-specific data
+### Search against domain-specific data
 
 LLM Applications often require searching against domain-specific data and then generate the response. Building such retrieve and generate (RAG) system is now 
 
@@ -105,24 +88,66 @@ Using the search tag, LLM now will answer question based on retrieved content. X
 
 Read more about [search](./features/search.md)
 
-## Checking for hallucination
 
-One of the biggest challenge for production usage of LLM is the chance of model hallucination, which means model generate content that is purely counter-factual. XPrompt incorporate best practices for validating if the response is hallucinated and warns users for potential hallucinated tokens. If enabled, XPrompt will response everything a normal request has with additional information such as 
+
+## [Post generate features](./features/post_generation.md)
+XPrompt provides convenient features 
+### Confidence estimation
+Hallucinated responses usually have low confidence scores, although not all low confidence cases are caused by hallucination. Usually when the question is ambiguous or confusing, the model tends to give a low confidence score and hallucinate an answer to give the best shot. So filtering out low confidence generation is a common tactic ML engineers use to identify potential problematic responses.
+
 
 ```python
-{
-	# ...,
-
-  "answer_quality": {
-    "controversy_tokens": [
-      "maybe_hallucinated_token"
-    ],
-    "pass_corroboration": true
-  }
-}
+xprompt.ChatCompletion.create(
+model="gpt-3.5-turbo",
+messages=[{"role": "user", "content": "Hello world"}],
+include_confidence=True
+)
 ```
 
-## XPrompt design principal
+### Build a voice conversational agent
+
+User could also easily build a voice conversational agent with XPrompt
+
+```python
+import xprompt
+
+prompt = """
+	You are a helpful conversational agent for user.
+	
+	User: <audio src='user audio file path' />
+	Agent:
+"""
+xprompt.OpenAIChatCompletion.create(
+    model="gpt-3.5-turbo", 
+    messages=[{"role": "user", "content": prompt}],
+    output_format="audio"
+)
+```
+
+## [Production API features](./features/post_generation.md)
+XPrompt has support for different API features would be useful in production enviornment. Check out all of [production API features](./features/api_features.md).
+
+### Switching among different LLM providers
+Different LLM providers require different API clients and request formats. XPrompt allows users to switch among different LLM providers while following the exact same OpenAI request format.
+
+
+```python
+# send request to OpenAI
+xprompt.ChatCompletion.create(
+model="gpt-3.5-turbo",
+messages=[{"role": "user", "content": "Hello world"}]
+)
+
+
+# swtich to claude_v2
+xprompt.ChatCompletion.create(
+model="claude_v2", # claude_v2, bard
+messages=[{"role": "user", "content": "Hello world"}]
+)
+```
+
+
+## [XPrompt design principal](./features/xprompt_design_principal.md)
 To make it easy to follow, XPrompt has a consistent design language which is similar to HTML to lower the learning curve and be consistent.  
 There are mainly two places users interacts with XPrompt, which are **prompt level** and **API level**.  
 In the prompt level, XPrompt allows HTML like smart components to add new content or decorate text in there.   
