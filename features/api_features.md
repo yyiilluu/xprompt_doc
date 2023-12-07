@@ -50,7 +50,7 @@ Once enabled, the next time the same prompt sent to the same model provider will
 
 ```python
 import xprompt
-xpromp.exact_caching = True
+xprompt.exact_caching = True
 ```
 
 
@@ -60,7 +60,7 @@ If the prompts contain similar semantic information, using the cached answer cou
 
 ```python
 import xprompt
-xpromp.semantic_caching = True
+xprompt.semantic_caching = True
 ```
 
 

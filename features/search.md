@@ -52,10 +52,10 @@ prompt = """
 	Based on the following content
 	
 	content:
-	<index collection='local_index'>
+	<index collection_name='local_index'>
 		long context to be search
 	</index>
-	<search query='request refund docs' n_results=2 collection='local_index' />
+	<search query='request refund docs' n_results=2 collection_name='local_index' />
 	
 	Question: Can i get refund?
 	Answer:
