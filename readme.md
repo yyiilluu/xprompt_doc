@@ -31,6 +31,11 @@ And more!
 
 XPrompt is 100% compatible with OpenAI request and response payload, so that same request to OpenAI can now be sent to xprompt and get identical responses back. Example notebook [here](./example_notebooks/demo.ipynb).
 
+## Installation
+Install the python client with 
+```sh
+pip install xprompt-client
+```
 
 ## [Feature rich prompt](./features/feature_rich_prompt.md)
 
@@ -144,7 +149,7 @@ output_format="audio"
 XPrompt has support for different API features that would be useful in the production environment. Check out all of [production API features](./features/api_features.md).
 
 
-### Switching among different LLM providers
+### [WIP]Switching among different LLM providers
 Different LLM providers require different API clients and request formats. XPrompt allows users to switch among different LLM providers while following the exact same OpenAI request format.
 
 

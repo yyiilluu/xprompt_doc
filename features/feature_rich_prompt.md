@@ -59,7 +59,7 @@ Learn more about [data integration in prompt](./data_integration.md).
 List of data sources supported
 - pdf
 - google doc
-- jira
+- [TODO] jira
 
 
 For example:

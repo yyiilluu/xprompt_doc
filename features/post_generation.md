@@ -15,9 +15,15 @@ Hallucinated responses usually have low confidence scores, although not all low 
 xprompt.ChatCompletion.create(
 model="gpt-3.5-turbo",
 messages=[{"role": "user", "content": "Hello world"}],
-include_confidence=True
+answer_quality={'include_confidence':True}
 )
+
+# response will includes
+"answer_quality": {
+    "confidence_score": 5
+},
 ```
+
 
 
 The downside of getting a calibrated confidence score is it will incur more cost to the LLM provider and potentially slow down the request by 2x. In most cases, latency is not a concern since each request is really fast. But it is worth noting for very latency sensitive use cases.
@@ -29,7 +35,7 @@ The downside of getting a calibrated confidence score is it will incur more cost
 
 ### Answer corroboration
 If a model would hallucinate, it is unlikely that the model would hallucinate the same thing every time. Therefore, XPrompt provides the ability to corroborate different responses from the same model and different models to identify potentially hallucinated or problematic sentences or words.
-
+`answer_corroboration_count` specifies how many more different generations should be used for comparison. More different genartions will have better cooroboration results but it will incure more costs as well. If you are not sure, we recommend you start with just 2, which includes 1 answer generated with specified temperature and 2 more generated for corroboration. 
 
 ```python
 xprompt.ChatCompletion.create(
