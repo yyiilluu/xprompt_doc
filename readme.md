@@ -37,6 +37,21 @@ Install the python client with
 pip install xprompt-client
 ```
 
+To use xprompt in python
+```python
+import xprompt 
+
+# login with credentials
+api_key_response = xprompt.login(user_email='<username>', password='<password>')
+print(api_key_response)
+
+# set the login credentials and openai API key
+xprompt.api_key = api_key_response['access_token']
+xprompt.openai_api_key = os.environ['OPENAI_API_KEY']
+
+```
+then you are ready to go and following the rest of the examples. Also, feel free to check out some [demo notebooks](./example_notebooks/demo.ipynb)
+
 ## [Feature rich prompt](./features/feature_rich_prompt.md)
 
 
